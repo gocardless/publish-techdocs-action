@@ -7,7 +7,7 @@ inputs:
   credentials:
     description: 
       Credentials required to authenticate with your publisher through the techdocs-cli
-      For GCS, provide the GOOGLE_APPLICATION_CREDENTIALS as a string
+      For GCS, provide the JSON service account key file, as a base64-encoded string in GOOGLE_APPLICATION_CREDENTIALS 
       For AWS, provide AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION, delimited by a space
       For Azure, provide AZURE_TENANT_ID, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET delimited by a space
     required: true

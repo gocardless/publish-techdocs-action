@@ -19,7 +19,7 @@ name: build
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
 jobs:
   build:

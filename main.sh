@@ -22,7 +22,8 @@ publishCmd="techdocs-cli publish \
         --entity $entity"
 
 if [[ $publisher == "googleGcs" ]]; then
-    GOOGLE_APPLICATION_CREDENTIALS=$credentials
+    GOOGLE_APPLICATION_CREDENTIALS=/tmp/credentials
+    echo $credentials | base64 -d > $GOOGLE_APPLICATION_CREDENTIALS
 fi 
 
 creds=( $credentials )

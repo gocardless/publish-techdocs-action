@@ -1,6 +1,6 @@
 FROM spotify/techdocs
 
-RUN apk --no-cache add bash nodejs npm
+RUN apk --no-cache add bash npm
 
 RUN npm install -g @techdocs/cli
 

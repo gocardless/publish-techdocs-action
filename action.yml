@@ -1,0 +1,39 @@
+name: Publish TechDocs
+description: Generate and publish TechDocs
+inputs:
+  publisher:
+    description: awsS3 | googleGcs | azureBlobStorage
+    required: true
+  credentials:
+    description: 
+      Credentials required to authenticate with your publisher through the techdocs-cli
+      For GCS, provide the GOOGLE_APPLICATION_CREDENTIALS as a string
+      For AWS, provide AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION, delimited by a space
+      For Azure, provide AZURE_TENANT_ID, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET delimited by a space
+    required: true
+  bucket:
+    description: In case of AWS or GCS this is the bucket name. In case of Azure, the container name
+    required: true
+  entity:
+    description: Entity uid separated by / in namespace/kind/name order (case-sensitive). For example default/Component/myEntity
+    required: true
+  azureAccountName:
+    description: Azure account name, required if publisher is Azure
+  azureAccountKey: 
+    description: Azure Storage Account key. Use as an alternative authentication method to the credentials input
+  awsRoleArn: 
+    description: Optional AWS ARN of role to be assumed
+  awsEndpoint: 
+    description: Optional AWS endpoint to send requests to
+  runs:
+    using: docker
+    image: Dockerfile
+    args:
+    - '-a ${{ inputs.publisher }}'
+    - '-b ${{ inputs.credentials }}'
+    - '-c ${{ inputs.bucket }}'
+    - '-d ${{ inputs.entity }}'
+    - '-e ${{ inputs.azureAccountName }}'
+    - '-f ${{ inputs.azureAccountKey }}'
+    - '-g ${{ inputs.awsRoleArn }}'
+    - '-h ${{ inputs.awsEndpoint }}'

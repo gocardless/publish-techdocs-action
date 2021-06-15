@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eo pipefail
 while getopts a:b:c:d:e:f:g:h flag
 do
     case "${flag}" in
@@ -13,33 +14,52 @@ do
     esac
 done
 
-echo "Generating the docs" 
+pushd $GITHUB_WORKSPACE
+
+echo "Generating the docs"
 techdocs-cli generate --no-docker --verbose
 
-publishCmd="techdocs-cli publish \
+if [[ $publisher == "googleGcs" ]]; then
+    echo $credentials | base64 -d > /tmp/credentials
+
+    echo "Publishing $entity to $publisher"
+    GOOGLE_APPLICATION_CREDENTIALS=/tmp/credentials techdocs-cli publish \
         --publisher-type $publisher \
         --storage-name $bucket \
-        --entity $entity"
+        --entity $entity
 
-if [[ $publisher == "googleGcs" ]]; then
-    GOOGLE_APPLICATION_CREDENTIALS=/tmp/credentials
-    echo $credentials | base64 -d > $GOOGLE_APPLICATION_CREDENTIALS
-fi 
+    exit 0
+fi
 
 creds=( $credentials )
 if [[ $publisher == "awsS3" ]]; then
     AWS_ACCESS_KEY_ID=${creds[0]}
     AWS_SECRET_ACCESS_KEY=${creds[1]}
     AWS_REGION=${creds[2]}
-    publishCmd = "$publishCmd --awsRoleArn $awsRoleArn --awsEndpoint $awsEndpoint"
+
+    echo "Publishing $entity to $publisher"
+    techdocs-cli publish \
+        --publisher-type $publisher \
+        --storage-name $bucket \
+        --entity $entity \ 
+        --awsRoleArn $awsRoleArn \
+        --awsEndpoint $awsEndpoint
 fi
 
 if [[ $publisher == "azureBlobStorage" ]]; then
     AZURE_TENANT_ID=${creds[0]}
     AZURE_CLIENT_ID=${creds[1]}
     AZURE_CLIENT_SECRET=${creds[2]}
-    publishCmd = "$publishCmd --azureAccountName $azureAccountName --azureAccountKey $azureAccountKey"
-fi 
+    techdocs-cli publish \
+        --publisher-type $publisher \
+        --storage-name $bucket \
+        --entity $entity \ 
+        --azureAccountName $azureAccountName \
+        --azureAccountKey $azureAccountKey
 
-echo "Publishing $entity to $publisher" 
-eval $publishCmd
+    exit 0
+fi
+
+echo "Publisher $publisher not valid"
+
+exit 1

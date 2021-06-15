@@ -1,5 +1,7 @@
 # Generate and Publish TechDocs to GCS
 
+**EXPERIMENTAL: Use at own risk**
+
 > [GitHub Action](https://github.com/features/actions) for [Publishing TechDocs](https://backstage.io/docs/features/techdocs/techdocs-overview)
 
 [![GitHub Release][release-img]][release]

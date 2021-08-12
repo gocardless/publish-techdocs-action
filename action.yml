@@ -25,15 +25,15 @@ inputs:
     description: Optional AWS ARN of role to be assumed
   awsEndpoint: 
     description: Optional AWS endpoint to send requests to
-  runs:
-    using: docker
-    image: Dockerfile
-    args:
-    - '-a ${{ inputs.publisher }}'
-    - '-b ${{ inputs.credentials }}'
-    - '-c ${{ inputs.bucket }}'
-    - '-d ${{ inputs.entity }}'
-    - '-e ${{ inputs.azureAccountName }}'
-    - '-f ${{ inputs.azureAccountKey }}'
-    - '-g ${{ inputs.awsRoleArn }}'
-    - '-h ${{ inputs.awsEndpoint }}'
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+  - '-a ${{ inputs.publisher }}'
+  - '-b ${{ inputs.credentials }}'
+  - '-c ${{ inputs.bucket }}'
+  - '-d ${{ inputs.entity }}'
+  - '-e ${{ inputs.azureAccountName }}'
+  - '-f ${{ inputs.azureAccountKey }}'
+  - '-g ${{ inputs.awsRoleArn }}'
+  - '-h ${{ inputs.awsEndpoint }}'

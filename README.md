@@ -6,6 +6,7 @@
 
 [![GitHub Release][release-img]][release]
 [![GitHub Marketplace][marketplace-img]][marketplace]
+[![License][license-img]][license]
 
 ## Table of Contents
 
@@ -39,6 +40,8 @@ jobs:
 
 
 [release]: https://github.com/gocardless/publish-techdocs-action/releases/latest
-[release-img]: https://img.shields.io/github/release/gocardless/publish-techdocs-action.svg?logo=github
-[marketplace]: https://github.com/marketplace/actions/publish-techdocs-action
-[marketplace-img]: https://img.shields.io/badge/marketplace-publish-techdocs-action-blue?logo=github
+[release-img]: https://img.shields.io/github/release/gocardless/publish-techdocs-action?include_prereleases&color=blue
+[marketplace]: https://github.com/marketplace/actions/publish-techdocs
+[marketplace-img]: https://img.shields.io/badge/marketplace-publish--techdocs-blue?logo=github
+[license]: https://github.com/gocardless/publish-techdocs-action/blob/master/LICENSE
+[license-img]: https://img.shields.io/github/license/gocardless/publish-techdocs-action

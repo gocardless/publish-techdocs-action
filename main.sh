@@ -7,11 +7,11 @@ do
         b) credentials=${OPTARG};;
         c) bucket=${OPTARG};;
         d) entity=${OPTARG};;
-        e) azureAccountName=${OPTARG};;
-        f) azureAccountKey=${OPTARG};;
-        g) awsRoleArn=${OPTARG};;
-        h) awsEndpoint=${OPTARG};;
-        i) sourceDir=${OPTARG};;
+        e) sourceDir=${OPTARG};;
+        f) azureAccountName=${OPTARG};;
+        g) azureAccountKey=${OPTARG};;
+        h) awsRoleArn=${OPTARG};;
+        i) awsEndpoint=${OPTARG};;
     esac
 done
 

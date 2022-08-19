@@ -17,6 +17,9 @@ inputs:
   entity:
     description: Entity uid separated by / in namespace/kind/name order (case-sensitive). For example default/Component/myEntity
     required: true
+  sourceDir:
+    description: 'Source directory for repositories containing nested documentation'
+    default: .
   azureAccountName:
     description: Azure account name, required if publisher is Azure
   azureAccountKey:
@@ -25,9 +28,6 @@ inputs:
     description: Optional AWS ARN of role to be assumed
   awsEndpoint:
     description: Optional AWS endpoint to send requests to
-  sourceDir:
-    description: 'Source directory for repositories containing nested documentation'
-    default: .
 
 runs:
   using: docker
@@ -42,12 +42,12 @@ runs:
   - '-d'
   - ${{ inputs.entity }}
   - '-e'
-  - ${{ inputs.azureAccountName }}
-  - '-f'
-  - ${{ inputs.azureAccountKey }}
-  - '-g'
-  - ${{ inputs.awsRoleArn }}
-  - '-h'
-  - ${{ inputs.awsEndpoint }}
-  - '-i'
   - ${{ inputs.sourceDir }}
+  - '-f'
+  - ${{ inputs.azureAccountName }}
+  - '-g'
+  - ${{ inputs.azureAccountKey }}
+  - '-h'
+  - ${{ inputs.awsRoleArn }}
+  - '-i'
+  - ${{ inputs.awsEndpoint }}

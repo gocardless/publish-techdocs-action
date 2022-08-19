@@ -25,6 +25,10 @@ inputs:
     description: Optional AWS ARN of role to be assumed
   awsEndpoint:
     description: Optional AWS endpoint to send requests to
+  sourceDir:
+    description: 'Source directory for repositories containing nested documentation'
+    default: .
+
 runs:
   using: docker
   image: Dockerfile
@@ -45,3 +49,5 @@ runs:
   - ${{ inputs.awsRoleArn }}
   - '-h'
   - ${{ inputs.awsEndpoint }}
+  - '-i'
+  - ${{ inputs.sourceDir }}

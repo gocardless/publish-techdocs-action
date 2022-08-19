@@ -1,6 +1,6 @@
 #!/bin/bash
 set -eo pipefail
-while getopts a:b:c:d:e:f:g:h flag
+while getopts a:b:c:d:e:f:g:h:i flag
 do
     case "${flag}" in
         a) publisher=${OPTARG};;
@@ -11,13 +11,14 @@ do
         f) azureAccountKey=${OPTARG};;
         g) awsRoleArn=${OPTARG};;
         h) awsEndpoint=${OPTARG};;
+        i) sourceDir=${OPTARG};;
     esac
 done
 
 pushd $GITHUB_WORKSPACE
 
-echo "Generating the docs"
-techdocs-cli generate --no-docker --verbose
+echo "Generating the docs from $sourceDir to $sourceDir/site/"
+techdocs-cli generate --no-docker --verbose --source-dir "$sourceDir" --output-dir "$sourceDir/site"
 
 if [[ $publisher == "googleGcs" ]]; then
     echo $credentials | base64 -d > /tmp/credentials
@@ -26,7 +27,8 @@ if [[ $publisher == "googleGcs" ]]; then
     GOOGLE_APPLICATION_CREDENTIALS=/tmp/credentials techdocs-cli publish \
         --publisher-type $publisher \
         --storage-name $bucket \
-        --entity $entity
+        --entity $entity \
+        --directory "$sourceDir/site"
 
     exit 0
 fi
@@ -43,7 +45,8 @@ if [[ $publisher == "awsS3" ]]; then
         --storage-name $bucket \
         --entity $entity \ 
         --awsRoleArn $awsRoleArn \
-        --awsEndpoint $awsEndpoint
+        --awsEndpoint $awsEndpoint \
+        --directory "$sourceDir/site"
 fi
 
 if [[ $publisher == "azureBlobStorage" ]]; then
@@ -55,7 +58,8 @@ if [[ $publisher == "azureBlobStorage" ]]; then
         --storage-name $bucket \
         --entity $entity \ 
         --azureAccountName $azureAccountName \
-        --azureAccountKey $azureAccountKey
+        --azureAccountKey $azureAccountKey \
+        --directory "$sourceDir/site"
 
     exit 0
 fi

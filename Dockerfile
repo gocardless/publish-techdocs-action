@@ -2,7 +2,7 @@ FROM spotify/techdocs
 
 RUN apk --no-cache add bash npm
 
-RUN npm install -g @techdocs/cli@^0.7.0 --unsafe
+RUN npm install -g @techdocs/cli@^1.2.0 --unsafe
 
 RUN pip install mkdocs-awesome-pages-plugin==2.5.0 mkdocs-nav-enhancements==0.9.1 mkdocs-exclude==1.0.2
 

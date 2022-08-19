@@ -17,6 +17,11 @@ done
 
 pushd $GITHUB_WORKSPACE
 
+if [[ ! -d $sourceDir ]]
+then
+  echo "$sourceDir does not exist"
+  exit 0
+fi
 echo "Generating the docs from $sourceDir to $sourceDir/site/"
 techdocs-cli generate --no-docker --verbose --source-dir "$sourceDir" --output-dir "$sourceDir/site"
 

@@ -23,6 +23,7 @@ then
   exit 0
 fi
 echo "Generating the docs from $sourceDir to $sourceDir/site/"
+
 techdocs-cli generate --no-docker --verbose --source-dir "$sourceDir" --output-dir "$sourceDir/site"
 
 if [[ $publisher == "googleGcs" ]]; then

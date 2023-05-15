@@ -28,10 +28,20 @@ inputs:
     description: Optional AWS ARN of role to be assumed
   awsEndpoint:
     description: Optional AWS endpoint to send requests to
+  ref:
+    required: false
+    description: "Branch name/ref for the publish-techdocs-action to be used"
+    default: "master"
 
 runs:
   using: composite
   steps:
+    - name: Checkout publish-techdocs-action repo
+      uses: actions/checkout@v3
+      with:
+        repository: gocardless/publish-techdocs-action
+        ref: ${{ inputs.ref }}
+        path: techdocs-action
     - uses: actions/setup-node@v3
     - uses: actions/setup-python@v4
       with:
@@ -66,7 +76,8 @@ runs:
     - name: 'Publish docs'
       shell: bash
       run: |
-        ./main.sh \
+        ls techdocs-action
+        ./techdocs-action/main.sh \
         -a ${{ inputs.publisher }} \
         -b ${{ inputs.credentials }} \
         -c ${{ inputs.bucket }} \

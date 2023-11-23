@@ -18,24 +18,33 @@
 ### Workflow
 
 ```yaml
-name: build
+name: publish-techdocs
 on:
   push:
     branches:
-      - main
-  pull_request:
+      - master
+    paths:
+      - docs/**
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-18.04
+  publish-techdocs:
+    name: Publish Techdocs
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        n:
+          - env: staging
+            secret: TECHDOCS_GCS_SECRET_ACCESS_KEY_STAGING
+          - env: production
+            secret: TECHDOCS_GCS_SECRET_ACCESS_KEY_PRODUCTION
     steps:
-      - name: Publish TechDocs
+      - uses: actions/checkout@v3
+      - name: Publish TechDocs - ${{ matrix.n.env }}
         uses: gocardless/publish-techdocs-action@master
         with:
           publisher: googleGcs
-          credentials: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-          bucket: bucket_name
-          entity: default/Component/Backstage
+          credentials: ${{ secrets[matrix.n.secret] }}
+          bucket: gc-prd-tech-docs-${{ matrix.n.env }}
+          entity: default/component/<YOUR_SERVICE_NAME_GOES_HERE>
 ```
 
 

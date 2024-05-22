@@ -1,4 +1,4 @@
-FROM spotify/techdocs
+FROM spotify/techdocs:1.2.3
 
 RUN apk --no-cache add bash npm
 

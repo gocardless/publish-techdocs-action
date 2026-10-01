@@ -88,7 +88,7 @@ if [[ $publisher == "awsS3" ]]; then
     techdocs-cli publish \
         --publisher-type $publisher \
         --storage-name $bucket \
-        --entity $entity \ 
+        --entity $entity \
         --awsRoleArn $awsRoleArn \
         --awsEndpoint $awsEndpoint \
         --directory "$sourceDir/site"
@@ -101,7 +101,7 @@ if [[ $publisher == "azureBlobStorage" ]]; then
     techdocs-cli publish \
         --publisher-type $publisher \
         --storage-name $bucket \
-        --entity $entity \ 
+        --entity $entity \
         --azureAccountName $azureAccountName \
         --azureAccountKey $azureAccountKey \
         --directory "$sourceDir/site"

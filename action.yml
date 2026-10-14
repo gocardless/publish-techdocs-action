@@ -32,22 +32,17 @@ inputs:
 runs:
   using: docker
   image: Dockerfile
-  args:
-  - '-a'
-  - ${{ inputs.publisher }}
-  - '-b'
-  - ${{ inputs.credentials }}
-  - '-c'
-  - ${{ inputs.bucket }}
-  - '-d'
-  - ${{ inputs.entity }}
-  - '-e'
-  - ${{ inputs.sourceDir }}
-  - '-f'
-  - ${{ inputs.azureAccountName }}
-  - '-g'
-  - ${{ inputs.azureAccountKey }}
-  - '-h'
-  - ${{ inputs.awsRoleArn }}
-  - '-i'
-  - ${{ inputs.awsEndpoint }}
+  # Inputs are passed as environment variables, never as args: action args
+  # become PID 1's command line, which the repository-controlled MkDocs build
+  # in main.sh can read from /proc/1/cmdline.
+  # See https://hackerone.com/reports/4012368
+  env:
+    INPUT_PUBLISHER: ${{ inputs.publisher }}
+    INPUT_CREDENTIALS: ${{ inputs.credentials }}
+    INPUT_BUCKET: ${{ inputs.bucket }}
+    INPUT_ENTITY: ${{ inputs.entity }}
+    INPUT_SOURCEDIR: ${{ inputs.sourceDir }}
+    INPUT_AZUREACCOUNTNAME: ${{ inputs.azureAccountName }}
+    INPUT_AZUREACCOUNTKEY: ${{ inputs.azureAccountKey }}
+    INPUT_AWSROLEARN: ${{ inputs.awsRoleArn }}
+    INPUT_AWSENDPOINT: ${{ inputs.awsEndpoint }}

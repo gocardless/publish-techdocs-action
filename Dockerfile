@@ -1,8 +1,8 @@
-FROM spotify/techdocs:v1.2.3
+FROM spotify/techdocs:v1.2.8
 
 RUN apk --no-cache add bash npm
 
-RUN npm install -g @techdocs/cli@1.8.12
+RUN npm install -g @techdocs/cli@1.14.0
 
 RUN pip install --no-cache-dir mkdocs-awesome-pages-plugin==2.5.0 \
     mkdocs-nav-enhancements==0.9.1 \
